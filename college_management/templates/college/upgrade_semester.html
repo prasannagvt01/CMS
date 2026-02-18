@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Upgrade Semester{% endblock %}
+{% block title %}Upgrade Semester - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>📈 Upgrade Semester</h2>
+        <p>Bulk upgrade students from one semester to another</p>
+    </div>
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid cols-2">
+            <div class="input-group">
+                <label for="{{ form.from_semester.id_for_label }}">From Semester</label>
+                {{ form.from_semester }}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.to_semester.id_for_label }}">To Semester</label>
+                {{ form.to_semester }}
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"
+                onclick="return confirm('Are you sure you want to upgrade? This will update ALL students in the selected semester.')">Upgrade</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Remove Student{% endblock %}
+{% block title %}Remove Student - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>🗑️ Remove Student</h2>
+        <p>Enter Registration ID to delete a student record</p>
+    </div>
+    <form method="post" class="search-bar"
+        onsubmit="return confirm('⚠️ This will permanently DELETE the student record. Are you sure?')">
+        {% csrf_token %}
+        <input type="number" name="student_id" class="form-input" placeholder="Enter Registration ID..." required>
+        <button type="submit" class="btn btn-danger">Delete Student</button>
+    </form>
+</div>
+
+<div class="table-card">
+    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">All Students</h3>
+    {% if students %}
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Semester</th>
+                    <th>Program</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td><strong>{{ s.id }}</strong></td>
+                    <td>{{ s.full_name }}</td>
+                    <td>{{ s.semester }}</td>
+                    <td>{{ s.program }}</td>
+                    <td>{{ s.mobile }}</td>
+                    <td>{{ s.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <span class="empty-icon">📭</span>
+        <p>No students found.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

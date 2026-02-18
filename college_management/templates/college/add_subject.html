@@ -1,0 +1,56 @@
+﻿{% extends 'base.html' %}
+
+{% block page_title %}Add Subject{% endblock %}
+{% block title %}Add Subject - College Management System{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>Add New Subject</h2>
+        <p>Register a new subject/course in the academic catalog.</p>
+    </div>
+
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="{{ form.code.id_for_label }}">Subject Code</label>
+                {{ form.code }}
+                {% if form.code.errors %}<span class="field-error">{{ form.code.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.name.id_for_label }}">Subject Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}<span class="field-error">{{ form.name.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.department.id_for_label }}">Department</label>
+                {{ form.department }}
+                {% if form.department.errors %}<span class="field-error">{{ form.department.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.semester.id_for_label }}">Semester</label>
+                {{ form.semester }}
+                {% if form.semester.errors %}<span class="field-error">{{ form.semester.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.credits.id_for_label }}">Credits</label>
+                {{ form.credits }}
+                {% if form.credits.errors %}<span class="field-error">{{ form.credits.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.teacher.id_for_label }}">Assign Faculty</label>
+                {{ form.teacher }}
+                {% if form.teacher.errors %}<span class="field-error">{{ form.teacher.errors.0 }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span> Save Subject</span>
+            </button>
+            <a href="{% url 'subject_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

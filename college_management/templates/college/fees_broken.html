@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Fees{% endblock %}
+{% block title %}Fees - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>💰 Fee Management</h2>
+        <p>Submit fee payment for a student</p>
+    </div>
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid cols-2">
+            <div class="input-group">
+                <label for="{{ form.student_id.id_for_label }}">Student Registration ID</label>
+                {{ form.student_id }}
+                {% if form.student_id.errors %}<span class="field-error">{{ form.student_id.errors.0 }}</span>{% endif
+                %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.amount.id_for_label }}">Fee Amount (₹)</label>
+                {{ form.amount }}
+                {% if form.amount.errors %}<span class="field-error">{{ form.amount.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.payment_date.id_for_label }}">Payment Date</label>
+                {{ form.payment_date }}
+                {% if form.payment_date.errors %}<span class="field-error">{{ form.payment_date.errors.0 }}</span>{%
+                endif %}
+            </div>
+        </div>
+
+        {% if student_info %}
+        <div class="info-box">
+            <h4>Student Information</h4>
+            <p><strong>Name:</strong> {{ student_info.full_name }}</p>
+            <p><strong>Mother's Name:</strong> {{ student_info.mother_name }}</p>
+            <p><strong>Duration:</strong> {{ student_info.duration }}</p>
+        </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit Payment</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

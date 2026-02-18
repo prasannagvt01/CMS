@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block page_title %}About Us{% endblock %}
+{% block title %}About Us - CMS{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <div class="about-hero">
+        <span class="about-icon">🏫</span>
+        <h1>College Management System</h1>
+        <p class="about-tagline">A Modern Web Application for Academic Administration</p>
+    </div>
+
+    <div class="about-grid">
+        <div class="about-card">
+            <span class="about-card-icon">🎯</span>
+            <h3>Our Mission</h3>
+            <p>To streamline and modernize academic administration in educational institutions, providing an intuitive
+                interface for managing student records, faculty information, fee collection, and academic progress
+                tracking.</p>
+        </div>
+        <div class="about-card">
+            <span class="about-card-icon">🔒</span>
+            <h3>Secure & Reliable</h3>
+            <p>Built with Django's robust authentication system and secure database management, ensuring data integrity
+                and protection for all institutional records.</p>
+        </div>
+        <div class="about-card">
+            <span class="about-card-icon">⚡</span>
+            <h3>Fast & Efficient</h3>
+            <p>Optimized for speed and usability, enabling quick data entry, instant search results, and real-time
+                updates across all management modules.</p>
+        </div>
+        <div class="about-card">
+            <span class="about-card-icon">📊</span>
+            <h3>Comprehensive</h3>
+            <p>Complete management of students, faculty, fees, and academic progress — all in one unified platform
+                accessible from any device.</p>
+        </div>
+    </div>
+
+    <div class="about-tech">
+        <h2>Technologies Used</h2>
+        <div class="tech-badges">
+            <span class="tech-badge">🐍 Python</span>
+            <span class="tech-badge">🌐 Django</span>
+            <span class="tech-badge">🗄️ SQLite</span>
+            <span class="tech-badge">🎨 CSS3</span>
+            <span class="tech-badge">📱 Responsive Design</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

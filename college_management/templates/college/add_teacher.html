@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Add Teacher{% endblock %}
+{% block title %}Add Teacher - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>👨‍🏫 Add Teacher Information</h2>
+        <p>Register a new faculty member</p>
+    </div>
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            {% for field in form %}
+            <div
+                class="input-group {% if field.name == 'address' %}full-width{% endif %} {% if field.name == 'gender' %}radio-group{% endif %}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<span class="field-error">{{ field.errors.0 }}</span>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

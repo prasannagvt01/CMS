@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - College Management System{% endblock %}
+
+{% block auth_content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <span class="auth-logo">🎓</span>
+            <h1>College Management System</h1>
+            <p>Sign in to your account</p>
+        </div>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="auth-error">
+                <span>❌</span> Invalid username or password. Please try again.
+            </div>
+            {% endif %}
+            <div class="input-group">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" class="form-input" placeholder="Enter your username"
+                    required autofocus>
+            </div>
+            <div class="input-group">
+                <label for="id_password">Password</label>
+                <input type="password" name="password" id="id_password" class="form-input"
+                    placeholder="Enter your password" required>
+                <label class="show-password">
+                    <input type="checkbox"
+                        onclick="let p=document.getElementById('id_password'); p.type=p.type==='password'?'text':'password'">
+                    Show Password
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Login</button>
+        </form>
+        <div class="auth-footer">
+            Don't have an account? <a href="{% url 'register' %}">Register here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block page_title %}New Admission{% endblock %}
+{% block title %}New Admission - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>📝 New Student Admission</h2>
+        <p>Fill in the details to register a new student</p>
+    </div>
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            {% for field in form %}
+            <div
+                class="input-group {% if field.name == 'address' %}full-width{% endif %} {% if field.name == 'gender' %}radio-group{% endif %}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <span class="field-error">{{ field.errors.0 }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

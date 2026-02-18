@@ -1,0 +1,65 @@
+﻿{% extends 'base.html' %}
+
+{% block page_title %}Subjects{% endblock %}
+{% block title %}Subjects - College Management System{% endblock %}
+
+{% block content %}
+<div class="table-card">
+    <div class="form-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2>Subject Catalog</h2>
+            <p>List of all subjects filtered by department.</p>
+        </div>
+        <a href="{% url 'add_subject' %}" class="btn btn-primary">
+            <span> Add New Subject</span>
+        </a>
+    </div>
+
+    <div class="search-bar" style="margin-bottom: 2rem;">
+        <form method="get" style="display: flex; gap: 1rem; width: 100%;">
+            <div class="input-group" style="flex: 1;">
+                <select name="dept" class="form-input">
+                    <option value="">All Departments</option>
+                    {% for dept in departments %}
+                    <option value="{{ dept.id }}" {% if dept_filter == dept.id|stringformat:"s" %}selected{% endif %}>{{ dept.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-secondary">
+                <span> Filter</span>
+            </button>
+        </form>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Dept</th>
+                    <th>Sem</th>
+                    <th>Credits</th>
+                    <th>Faculty</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub in subjects %}
+                <tr>
+                    <td><strong>{{ sub.code }}</strong></td>
+                    <td>{{ sub.name }}</td>
+                    <td>{{ sub.department.code }}</td>
+                    <td><span class="badge">Sem {{ sub.semester }}</span></td>
+                    <td>{{ sub.credits }}</td>
+                    <td>{{ sub.teacher.full_name|default:"Not Assigned" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">No subjects found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

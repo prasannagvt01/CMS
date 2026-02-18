@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}College Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🎓</span>
+                    <span class="logo-text">CMS</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-label">Main</span>
+                    <a href="{% url 'dashboard' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <span class="nav-icon">📊</span> Dashboard
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">Admission</span>
+                    <a href="{% url 'new_admission' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'new_admission' %}active{% endif %}">
+                        <span class="nav-icon">📝</span> New Admission
+                    </a>
+                    <a href="{% url 'upgrade_semester' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'upgrade_semester' %}active{% endif %}">
+                        <span class="nav-icon">📈</span> Upgrade Semester
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">Students</span>
+                    <a href="{% url 'search_student' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'search_student' %}active{% endif %}">
+                        <span class="nav-icon">🔍</span> Search Student
+                    </a>
+                    <a href="{% url 'student_detail' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'student_detail' %}active{% endif %}">
+                        <span class="nav-icon">👤</span> Individual Details
+                    </a>
+                    <a href="{% url 'remove_student' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'remove_student' %}active{% endif %}">
+                        <span class="nav-icon">🗑️</span> Remove Student
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-label">Academic</span>
+                    <a href="{% url 'department_list' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'department_list' %}active{% endif %}">
+                        <span class="nav-icon">🏢</span> Departments
+                    </a>
+                    <a href="{% url 'subject_list' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'subject_list' %}active{% endif %}">
+                        <span class="nav-icon">📚</span> Subjects
+                    </a>
+                    <a href="{% url 'add_teacher' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'add_teacher' %}active{% endif %}">
+                        <span class="nav-icon">👨‍🏫</span> Add Teacher
+                    </a>
+                    <a href="{% url 'search_teacher' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'search_teacher' %}active{% endif %}">
+                        <span class="nav-icon">🔎</span> Search Teacher
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-label">Performance</span>
+                    <a href="{% url 'mark_attendance' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'mark_attendance' %}active{% endif %}">
+                        <span class="nav-icon">📅</span> Mark Attendance
+                    </a>
+                    <a href="{% url 'view_attendance' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'view_attendance' %}active{% endif %}">
+                        <span class="nav-icon">👁️</span> View Attendance
+                    </a>
+                    <a href="{% url 'add_result' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'add_result' %}active{% endif %}">
+                        <span class="nav-icon">✍️</span> Add Result
+                    </a>
+                    <a href="{% url 'view_results' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'view_results' %}active{% endif %}">
+                        <span class="nav-icon">🎓</span> View Results
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-label">Resources</span>
+                    <a href="{% url 'notice_board' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'notice_board' %}active{% endif %}">
+                        <span class="nav-icon">📢</span> Notice Board
+                    </a>
+                    <a href="{% url 'library_catalog' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'library_catalog' %}active{% endif %}">
+                        <span class="nav-icon">📖</span> Library
+                    </a>
+                    <a href="{% url 'issue_book' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'issue_book' %}active{% endif %}">
+                        <span class="nav-icon">📤</span> Issue/Return
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-label">System</span>
+                    <a href="{% url 'about' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                        <span class="nav-icon">ℹ️</span> About Us
+                    </a>
+                    <a href="{% url 'logout' %}" class="nav-link logout-link">
+                        <span class="nav-icon">🚪</span> Logout
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="user-avatar">{{ user.username.0|upper }}</span>
+                    <span class="user-name">{{ user.username }}</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <button class="menu-toggle"
+                    onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+                <h1 class="page-title">{% block page_title %}Dashboard{% endblock %}</h1>
+                <div class="top-bar-right">
+                    <span class="greeting">Welcome, <strong>{{ user.username }}</strong></span>
+                </div>
+            </header>
+
+            {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" onclick="this.remove()">
+                    <span class="alert-icon">
+                        {% if message.tags == 'success' %}✅{% elif message.tags == 'error' %}❌{% elif message.tags ==
+                        'warning' %}⚠️{% else %}ℹ️{% endif %}
+                    </span>
+                    {{ message }}
+                    <span class="alert-close">×</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="content-area">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    {% else %}
+    {% block auth_content %}{% endblock %}
+    {% endif %}
+
+    <script>
+        // Auto-dismiss alerts after 5 seconds
+        document.querySelectorAll('.alert').forEach(el => {
+            setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 5000);
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

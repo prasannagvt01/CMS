@@ -1,0 +1,46 @@
+﻿{% extends 'base.html' %}
+
+{% block page_title %}Add Department{% endblock %}
+{% block title %}Add Department - College Management System{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>Add New Department</h2>
+        <p>Create a new academic department in the system.</p>
+    </div>
+
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="{{ form.name.id_for_label }}">Department Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}<span class="field-error">{{ form.name.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.code.id_for_label }}">Department Code</label>
+                {{ form.code }}
+                {% if form.code.errors %}<span class="field-error">{{ form.code.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group full-width">
+                <label for="{{ form.hod.id_for_label }}">Head of Department (HOD)</label>
+                {{ form.hod }}
+                {% if form.hod.errors %}<span class="field-error">{{ form.hod.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group full-width">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}<span class="field-error">{{ form.description.errors.0 }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span> Create Department</span>
+            </button>
+            <a href="{% url 'department_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Library Catalog{% endblock %}
+{% block title %}Library - College Management System{% endblock %}
+
+{% block content %}
+<div class="table-card">
+    <div class="form-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2>Book Catalog</h2>
+            <p>Search and browse all available books in the library.</p>
+        </div>
+        <a href="{% url 'add_book' %}" class="btn btn-primary">
+            <span>➕ Add New Book</span>
+        </a>
+    </div>
+
+    <div class="search-bar" style="margin-bottom: 2rem;">
+        <form method="get" style="display: flex; gap: 1rem; width: 100%;">
+            <input type="text" name="q" class="form-input" placeholder="Search by Title, Author, or ISBN..."
+                value="{{ query }}">
+            <button type="submit" class="btn btn-secondary">
+                <span>🔍 Search</span>
+            </button>
+        </form>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Dept</th>
+                    <th>Available</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td><code>{{ book.isbn }}</code></td>
+                    <td><strong>{{ book.title }}</strong></td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.department.code|default:"General" }}</td>
+                    <td>
+                        <span class="badge {% if book.available > 0 %}success{% else %}danger{% endif %}">
+                            {{ book.available }}
+                        </span>
+                    </td>
+                    <td>{{ book.quantity }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">No books found in the catalog.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

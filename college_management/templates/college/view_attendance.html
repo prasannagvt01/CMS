@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block page_title %}View Attendance{% endblock %}
+{% block title %}View Attendance - College Management System{% endblock %}
+
+{% block content %}
+<div class="table-card">
+    <div class="form-header">
+        <h2>Student Attendance Report</h2>
+        <p>Search by Student Registration ID to view detailed attendance records.</p>
+    </div>
+
+    <div class="search-bar" style="margin-bottom: 2rem;">
+        <form method="get" style="display: flex; gap: 1rem; width: 100%;">
+            <input type="text" name="q" class="form-input" placeholder="Enter Registration ID (e.g., 101)"
+                value="{{ query }}" required>
+            <button type="submit" class="btn btn-primary">
+                <span>🔍 View Report</span>
+            </button>
+        </form>
+    </div>
+
+    {% if student %}
+    <div class="detail-header">
+        <div class="detail-avatar">{{ student.full_name.0 }}</div>
+        <div>
+            <h2>{{ student.full_name }}</h2>
+            <p>ID: <strong>{{ student.id }}</strong> | Dept: {{ student.department.code }} | Sem: {{ student.semester }}
+            </p>
+        </div>
+    </div>
+
+    <div class="dashboard-grid" style="margin-bottom: 2rem;">
+        {% for s in summary %}
+        <div class="stat-card">
+            <div class="stat-details">
+                <p>{{ s.subject__name }}</p>
+                <h3>{{ s.percentage }}%</h3>
+                <small>{{ s.present }} / {{ s.total }} Lectures</small>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info" style="grid-column: 1 / -1;">No attendance records found for this student.</div>
+        {% endfor %}
+    </div>
+
+    {% if records %}
+    <div class="table-wrapper">
+        <h3 class="section-title">Detailed Logs</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.subject.name }}</td>
+                    <td>
+                        <span class="badge {% if record.status == 'Present' %}success{% else %}danger{% endif %}">
+                            {{ record.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% elif query %}
+    <div class="alert alert-error">No student found with ID: {{ query }}</div>
+    {% endif %}
+</div>
+{% endblock %}

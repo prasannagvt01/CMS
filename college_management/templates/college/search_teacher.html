@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Search Teacher{% endblock %}
+{% block title %}Search Teacher - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>🔎 Search Teacher</h2>
+        <p>Search by Registration ID or view all teachers</p>
+    </div>
+    <form method="get" class="search-bar">
+        <input type="number" name="q" class="form-input" placeholder="Enter Teacher Registration ID..."
+            value="{{ query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+        {% if query %}
+        <a href="{% url 'search_teacher' %}" class="btn btn-secondary">Show All</a>
+        {% endif %}
+    </form>
+</div>
+
+<div class="table-card">
+    {% if teachers %}
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Program</th>
+                    <th>Semester</th>
+                    <th>Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in teachers %}
+                <tr>
+                    <td><strong>{{ t.id }}</strong></td>
+                    <td>{{ t.full_name }}</td>
+                    <td>{{ t.gender }}</td>
+                    <td>{{ t.dob }}</td>
+                    <td>{{ t.mobile }}</td>
+                    <td>{{ t.email }}</td>
+                    <td>{{ t.program }}</td>
+                    <td>{{ t.semester }}</td>
+                    <td>{{ t.duration }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <span class="empty-icon">📭</span>
+        <p>No teachers found{% if query %} for ID "{{ query }}"{% endif %}.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

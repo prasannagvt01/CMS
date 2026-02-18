@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Issue / Return Book{% endblock %}
+{% block title %}Issue Book - College Management System{% endblock %}
+
+{% block content %}
+<div class="dashboard-sections" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+    <!-- Issue Form -->
+    <div class="form-card" style="margin-bottom: 0;">
+        <div class="form-header">
+            <h2>Issue Book</h2>
+            <p>Borrow a book to a student.</p>
+        </div>
+        <form method="post" class="styled-form">
+            {% csrf_token %}
+            <div class="input-group" style="margin-bottom: 1.25rem;">
+                <label for="{{ form.book.id_for_label }}">Select Book</label>
+                {{ form.book }}
+                {% if form.book.errors %}<span class="field-error">{{ form.book.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group" style="margin-bottom: 1.25rem;">
+                <label for="{{ form.student.id_for_label }}">Select Student</label>
+                {{ form.student }}
+                {% if form.student.errors %}<span class="field-error">{{ form.student.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group" style="margin-bottom: 1.25rem;">
+                <label for="{{ form.due_date.id_for_label }}">Due Date</label>
+                {{ form.due_date }}
+                {% if form.due_date.errors %}<span class="field-error">{{ form.due_date.errors.0 }}</span>{% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <span>📤 Issue Book</span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Active Issues List -->
+    <div class="table-card">
+        <div class="form-header">
+            <h2>Active Issues</h2>
+            <p>List of books currently borrowed.</p>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Student</th>
+                        <th>Due Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for issue in issued %}
+                    <tr>
+                        <td><strong>{{ issue.book.title }}</strong></td>
+                        <td>{{ issue.student.full_name }}</td>
+                        <td>
+                            <span class="{% if issue.due_date < today %}badge danger{% endif %}">
+                                {{ issue.due_date }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url 'return_book' issue.id %}" class="btn btn-secondary"
+                                style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">
+                                📥 Return
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 2rem;">No active issues.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+﻿{% extends 'base.html' %}
+
+{% block page_title %}Add Exam Result{% endblock %}
+{% block title %}Add Result - College Management System{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>Record Exam Marks</h2>
+        <p>Enter marks obtained by a student in a specific exam.</p>
+    </div>
+
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="{{ form.student.id_for_label }}">Student</label>
+                {{ form.student }}
+                {% if form.student.errors %}<span class="field-error">{{ form.student.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.subject.id_for_label }}">Subject</label>
+                {{ form.subject }}
+                {% if form.subject.errors %}<span class="field-error">{{ form.subject.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.exam_type.id_for_label }}">Exam Type</label>
+                {{ form.exam_type }}
+                {% if form.exam_type.errors %}<span class="field-error">{{ form.exam_type.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.marks_obtained.id_for_label }}">Marks Obtained</label>
+                {{ form.marks_obtained }}
+                {% if form.marks_obtained.errors %}<span class="field-error">{{ form.marks_obtained.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.max_marks.id_for_label }}">Maximum Marks</label>
+                {{ form.max_marks }}
+                {% if form.max_marks.errors %}<span class="field-error">{{ form.max_marks.errors.0 }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span> Save Result</span>
+            </button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

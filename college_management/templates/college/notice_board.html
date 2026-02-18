@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Notice Board{% endblock %}
+{% block title %}Notices - College Management System{% endblock %}
+
+{% block content %}
+<div class="form-header"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <h2>College Announcements</h2>
+        <p>Stay updated with the latest news and events.</p>
+    </div>
+    <a href="{% url 'add_notice' %}" class="btn btn-primary">
+        <span>📢 Post New Notice</span>
+    </a>
+</div>
+
+<div class="dashboard-sections" style="grid-template-columns: 1fr;">
+    {% for notice in notices %}
+    <div class="section-card"
+        style="margin-bottom: 1.5rem; position: relative; border-left: 5px solid {% if notice.priority == 'Urgent' %}#dc2626{% elif notice.priority == 'High' %}#d97706{% else %}var(--accent-primary){% endif %};">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">{{ notice.title }}</h3>
+                <div
+                    style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                    <span>📅 {{ notice.created_at|date:"F d, Y" }}</span>
+                    <span>👤 Posted by: {{ notice.posted_by|default:"Administrator" }}</span>
+                </div>
+            </div>
+            <span class="badge">{{ notice.priority }}</span>
+        </div>
+        <div style="line-height: 1.8; color: var(--text-secondary);">
+            {{ notice.content|linebreaks }}
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">No notices posted yet.</div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Dashboard{% endblock %}
+{% block title %}Dashboard - College Management System{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <div class="stat-card stat-students">
+        <div class="stat-icon">👨‍🎓</div>
+        <div class="stat-details">
+            <h3>{{ total_students }}</h3>
+            <p>Total Students</p>
+        </div>
+    </div>
+    <div class="stat-card stat-teachers">
+        <div class="stat-icon">👨‍🏫</div>
+        <div class="stat-details">
+            <h3>{{ total_teachers }}</h3>
+            <p>Total Faculty</p>
+        </div>
+    </div>
+    <div class="stat-card stat-subjects">
+        <div class="stat-icon">📚</div>
+        <div class="stat-details">
+            <h3>{{ total_subjects }}</h3>
+            <p>Total Subjects</p>
+        </div>
+    </div>
+    <div class="stat-card stat-books">
+        <div class="stat-icon">📖</div>
+        <div class="stat-details">
+            <h3>{{ total_books }}</h3>
+            <p>Library Books</p>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-sections">
+    <div class="section-card">
+        <h2 class="section-title">🎓 Admission & Students</h2>
+        <div class="quick-links">
+            <a href="{% url 'new_admission' %}" class="quick-link-card">
+                <span class="ql-icon">📝</span>
+                <span>Admission</span>
+            </a>
+            <a href="{% url 'search_student' %}" class="quick-link-card">
+                <span class="ql-icon">🔍</span>
+                <span>Search</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2 class="section-title">🏢 Academic</h2>
+        <div class="quick-links">
+            <a href="{% url 'department_list' %}" class="quick-link-card">
+                <span class="ql-icon">🏢</span>
+                <span>Departments</span>
+            </a>
+            <a href="{% url 'subject_list' %}" class="quick-link-card">
+                <span class="ql-icon">📚</span>
+                <span>Subjects</span>
+            </a>
+            <a href="{% url 'search_teacher' %}" class="quick-link-card">
+                <span class="ql-icon">👨‍🏫</span>
+                <span>Faculty</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2 class="section-title">📊 Performance</h2>
+        <div class="quick-links">
+            <a href="{% url 'mark_attendance' %}" class="quick-link-card">
+                <span class="ql-icon">📅</span>
+                <span>Attendance</span>
+            </a>
+            <a href="{% url 'add_result' %}" class="quick-link-card">
+                <span class="ql-icon">✍️</span>
+                <span>Add Result</span>
+            </a>
+            <a href="{% url 'view_results' %}" class="quick-link-card">
+                <span class="ql-icon">🎓</span>
+                <span>View Results</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="section-card">
+        <h2 class="section-title">📔 Resources</h2>
+        <div class="quick-links">
+            <a href="{% url 'notice_board' %}" class="quick-link-card">
+                <span class="ql-icon">📢</span>
+                <span>Notice Board</span>
+            </a>
+            <a href="{% url 'library_catalog' %}" class="quick-link-card">
+                <span class="ql-icon">📖</span>
+                <span>Library</span>
+            </a>
+            <a href="{% url 'issue_book' %}" class="quick-link-card">
+                <span class="ql-icon">📤</span>
+                <span>Issue Book</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if recent_notices %}
+<div class="section-card" style="margin-top: 2rem;">
+    <h2 class="section-title">📢 Recent Notices</h2>
+    <div class="notice-list">
+        {% for notice in recent_notices %}
+        <div class="notice-item" style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0; color: var(--accent-primary);">{{ notice.title }}</h4>
+                <span class="badge">{{ notice.priority }}</span>
+            </div>
+            <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">{{
+                notice.content|truncatechars:100 }}</p>
+            <small style="color: var(--text-muted);">{{ notice.created_at|date:"M d, Y" }}</small>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Add Book{% endblock %}
+{% block title %}Add Book - College Management System{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>Add Book to Library</h2>
+        <p>Register a new book in the library management system.</p>
+    </div>
+
+    <form method="post" class="styled-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="input-group full-width">
+                <label for="{{ form.title.id_for_label }}">Book Title</label>
+                {{ form.title }}
+                {% if form.title.errors %}<span class="field-error">{{ form.title.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.author.id_for_label }}">Author</label>
+                {{ form.author }}
+                {% if form.author.errors %}<span class="field-error">{{ form.author.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.isbn.id_for_label }}">ISBN Number</label>
+                {{ form.isbn }}
+                {% if form.isbn.errors %}<span class="field-error">{{ form.isbn.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.publisher.id_for_label }}">Publisher</label>
+                {{ form.publisher }}
+                {% if form.publisher.errors %}<span class="field-error">{{ form.publisher.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.department.id_for_label }}">Category/Dept</label>
+                {{ form.department }}
+                {% if form.department.errors %}<span class="field-error">{{ form.department.errors.0 }}</span>{% endif
+                %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.quantity.id_for_label }}">Total Quantity</label>
+                {{ form.quantity }}
+                {% if form.quantity.errors %}<span class="field-error">{{ form.quantity.errors.0 }}</span>{% endif %}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.available.id_for_label }}">Available Now</label>
+                {{ form.available }}
+                {% if form.available.errors %}<span class="field-error">{{ form.available.errors.0 }}</span>{% endif %}
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <span>➕ Save Book</span>
+            </button>
+            <a href="{% url 'library_catalog' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

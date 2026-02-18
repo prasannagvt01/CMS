@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Exam Results{% endblock %}
+{% block title %}Results - College Management System{% endblock %}
+
+{% block content %}
+<div class="table-card">
+    <div class="form-header">
+        <h2>Student Marksheet</h2>
+        <p>Search by Student Registration ID to view exam performances and GPA.</p>
+    </div>
+
+    <div class="search-bar" style="margin-bottom: 2rem;">
+        <form method="get" style="display: flex; gap: 1rem; width: 100%;">
+            <input type="text" name="q" class="form-input" placeholder="Enter Registration ID (e.g., 101)"
+                value="{{ query }}" required>
+            <button type="submit" class="btn btn-primary">
+                <span>🔍 Fetch Results</span>
+            </button>
+        </form>
+    </div>
+
+    {% if student %}
+    <div class="detail-header">
+        <div class="detail-avatar">{{ student.full_name.0 }}</div>
+        <div style="flex: 1;">
+            <h2>{{ student.full_name }}</h2>
+            <p>ID: <strong>{{ student.id }}</strong> | Dept: {{ student.department.code }} | Sem: {{ student.semester }}
+            </p>
+        </div>
+        <div class="stat-card" style="box-shadow: none; border: 2px solid var(--accent-primary);">
+            <div class="stat-details">
+                <p>Current GPA</p>
+                <h3 style="color: var(--accent-primary);">{{ gpa }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Exam Type</th>
+                    <th>Marks</th>
+                    <th>Max</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in results %}
+                <tr>
+                    <td><strong>{{ res.subject.name }}</strong></td>
+                    <td>{{ res.exam_type }}</td>
+                    <td>{{ res.marks_obtained }}</td>
+                    <td>{{ res.max_marks }}</td>
+                    <td>
+                        <span class="badge {% if res.grade == 'F' %}danger{% else %}success{% endif %}">
+                            {{ res.grade }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 2rem;">No results found for this student.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% elif query %}
+    <div class="alert alert-error">No student found with ID: {{ query }}</div>
+    {% endif %}
+</div>
+{% endblock %}

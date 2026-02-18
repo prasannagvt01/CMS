@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Student Details{% endblock %}
+{% block title %}Student Details - CMS{% endblock %}
+
+{% block content %}
+<div class="form-card">
+    <div class="form-header">
+        <h2>👤 Individual Student Details</h2>
+        <p>Enter Registration ID to view student information</p>
+    </div>
+    <form method="get" class="search-bar">
+        <input type="number" name="q" class="form-input" placeholder="Enter Registration ID..." value="{{ query }}">
+        <button type="submit" class="btn btn-primary">Show Details</button>
+        {% if student %}
+        <a href="{% url 'student_detail' %}" class="btn btn-secondary">Reset</a>
+        {% endif %}
+    </form>
+</div>
+
+{% if student %}
+<div class="detail-card">
+    <div class="detail-header">
+        <div class="detail-avatar">{{ student.full_name.0|upper }}</div>
+        <div>
+            <h2>{{ student.full_name }}</h2>
+            <span class="badge">Reg. ID: {{ student.id }}</span>
+        </div>
+    </div>
+    <div class="detail-grid">
+        <div class="detail-item">
+            <span class="detail-label">Full Name</span>
+            <span class="detail-value">{{ student.full_name }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Mother's Name</span>
+            <span class="detail-value">{{ student.mother_name }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Gender</span>
+            <span class="detail-value">{{ student.gender }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Date of Birth</span>
+            <span class="detail-value">{{ student.dob }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Mobile</span>
+            <span class="detail-value">{{ student.mobile }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">{{ student.email }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Semester</span>
+            <span class="detail-value">{{ student.semester }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Program</span>
+            <span class="detail-value">{{ student.program }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">School Name</span>
+            <span class="detail-value">{{ student.school_name }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Duration</span>
+            <span class="detail-value">{{ student.duration }}</span>
+        </div>
+        <div class="detail-item full-width">
+            <span class="detail-label">Address</span>
+            <span class="detail-value">{{ student.address }}</span>
+        </div>
+    </div>
+</div>
+{% elif query %}
+<div class="form-card">
+    <div class="empty-state">
+        <span class="empty-icon">🚫</span>
+        <p>No student found with Registration ID "{{ query }}".</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

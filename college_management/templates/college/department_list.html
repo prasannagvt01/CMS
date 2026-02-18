@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Departments{% endblock %}
+{% block title %}Departments - College Management System{% endblock %}
+
+{% block content %}
+<div class="table-card">
+    <div class="form-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h2>Academic Departments</h2>
+            <p>List of all engineering departments and their details.</p>
+        </div>
+        <a href="{% url 'add_department' %}" class="btn btn-primary">
+            <span>➕ Add New Department</span>
+        </a>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>HOD</th>
+                    <th>Students</th>
+                    <th>Faculty</th>
+                    <th>Subjects</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dept in departments %}
+                <tr>
+                    <td><strong>{{ dept.code }}</strong></td>
+                    <td>{{ dept.name }}</td>
+                    <td>{{ dept.hod|default:"Not Assigned" }}</td>
+                    <td><span class="badge">{{ dept.student_count }}</span></td>
+                    <td><span class="badge">{{ dept.teacher_count }}</span></td>
+                    <td><span class="badge">{{ dept.subject_count }}</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">No departments found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
